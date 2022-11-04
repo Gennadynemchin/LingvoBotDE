@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import requests
 
 
@@ -35,7 +37,8 @@ def lingvo_word_forms(word, token, lang):
 
 
 def main():
-    auth_token = 0
+    load_dotenv()
+    auth_token = os.getenv('LINGVO_TOKEN')
     token = lingvo_auth(auth_token)
     lingvo_word_forms('Alt', token, 1031)
 
