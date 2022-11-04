@@ -35,7 +35,7 @@ def lingvo_word_forms(word, token, lang):
 
 
 def main():
-    auth_token = 'Yjg2YzA1YWItZmI3Ni00Y2MwLWEzNjgtOTk1YTkyMDBkZmRjOjNlNWM3YzAzYWJjNDRlMmQ5NmNmOGUzNDE4MTc0NmRl'
+    auth_token = 0
     token = lingvo_auth(auth_token)
     lingvo_word_forms('Alt', token, 1031)
 
