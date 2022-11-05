@@ -27,20 +27,38 @@ def lingvo_word_forms(word, token, lang):
     response = requests.get(url, headers=headers, params=params)
     response.raise_for_status()
     result = response.json()
-    print(result)
-    for element in result:
-        list_for_parsing = element['ParadigmJson']['Groups']
-        for x in list_for_parsing:
-            # print(x)
-            if x['Name'] == "Indikativ, Perfekt, Aktiv":
-                print(x['Table'])
+    return result
+
+
+def translate_lingvo(word, lang_from, lang_to, token):
+    url = 'https://developers.lingvolive.com/api/v1/Translation'
+    headers = {'Authorization': f'Bearer {token}'}
+    params = {'text': word,
+              'srcLang': lang_from,
+              'dstLang': lang_to,
+              'isCaseSensitive': False
+              }
+    response = requests.get(url, headers=headers, params=params)
+    response.raise_for_status()
+    result = response.json()
+    return result
+
+
+def parse_response(resp):
+    for element in resp:
+        word = element['Lexem']
+        part_of_speech = element['PartOfSpeech']
+        groups = element['ParadigmJson']['Groups']
+        for group in groups:
+            print(group['Name'])
 
 
 def main():
     load_dotenv()
     auth_token = os.getenv('LINGVO_TOKEN')
     token = lingvo_auth(auth_token)
-    lingvo_word_forms('Alt', token, 1031)
+    word = lingvo_word_forms('Gehen', token, 1031)
+    print(parse_response(word))
 
 
 if __name__ == '__main__':
