@@ -50,15 +50,16 @@ def parse_response(resp):
         part_of_speech = element['PartOfSpeech']
         groups = element['ParadigmJson']['Groups']
         for group in groups:
-            print(group['Name'])
+            name, table = (group['Name'], group['Table'])
+            print(name, table)
 
 
 def main():
     load_dotenv()
     auth_token = os.getenv('LINGVO_TOKEN')
     token = lingvo_auth(auth_token)
-    word = lingvo_word_forms('Gehen', token, 1031)
-    print(parse_response(word))
+    word = lingvo_word_forms('Fernster', token, 1031)
+    parse_response(word)
 
 
 if __name__ == '__main__':
